@@ -11,5 +11,7 @@
             "Memory\\": "src"
         }
     },
-    "require": {}
+    "require": {
+        "phpspec/phpspec": "2.1.*"
+    }
 }
