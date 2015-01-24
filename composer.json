@@ -1,0 +1,15 @@
+{
+    "name": "nicholasruunu/memory",
+    "authors": [
+        {
+            "name": "Nicholas Ruunu",
+            "email": "nicholas@ruu.nu"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Memory\\": "src"
+        }
+    },
+    "require": {}
+}
