@@ -14,8 +14,8 @@ Memory(ScoreCalculator, PlaySheet, Deck)
     play(position, position)
     score()
 
-Game(playSheet, Deck)
-    createFrom(playSheet, Deck)
+Game(PlaySheet, Deck)
+    createFrom(PlaySheet, Deck)
 
 Card(SplFileInfo image)
     matches(Card): bool
@@ -25,7 +25,7 @@ Card(SplFileInfo image)
 CardCollection
     add(Card)
     shuffle()
-    shift()
+    getCards()
 
 PlaySheet
     record(Card, Card)
@@ -35,6 +35,6 @@ DeckGenerator(CardRepository)
     generate(size): Deck
 
 Deck(CardCollection)
-    turn(posistion): Card
+    turn(position): Card
     remove(Card)
 ```
