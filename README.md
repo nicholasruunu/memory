@@ -22,9 +22,10 @@ Card(SplFileInfo image)
     clone(Card): Card
     getImage(): string
 
-CardPairCollection
-    add()
-    count()
+CardCollection
+    add(Card)
+    shuffle()
+    shift()
 
 PlaySheet
     record(Card, Card)
