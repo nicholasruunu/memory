@@ -1,6 +1,6 @@
 <?php
 
-namespace Memory\Card;
+namespace Memory\Deck;
 
 use SplFileInfo;
 
@@ -17,7 +17,7 @@ class Card
     }
 
     /**
-     * @param \Memory\Card\Card $card
+     * @param \Memory\Deck\Card $card
      * @return bool
      */
     public function matches(Card $card)

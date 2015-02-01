@@ -2,7 +2,7 @@
 
 namespace Memory;
 
-use Memory\Card\Card;
+use Memory\Deck\Card;
 
 class PlaySheet
 {
@@ -12,8 +12,8 @@ class PlaySheet
     private $record = array();
 
     /**
-     * @param \Memory\Card\Card $firstCard
-     * @param \Memory\Card\Card $secondCard
+     * @param \Memory\Deck\Card $firstCard
+     * @param \Memory\Deck\Card $secondCard
      */
     public function record(Card $firstCard, Card $secondCard)
     {

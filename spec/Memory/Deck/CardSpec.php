@@ -1,8 +1,8 @@
 <?php
 
-namespace spec\Memory\Card;
+namespace spec\Memory\Deck;
 
-use Memory\Card\Card;
+use Memory\Deck\Card;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use SplFileInfo;
