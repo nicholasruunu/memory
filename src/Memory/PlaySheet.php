@@ -7,6 +7,8 @@ use Memory\Card\Card;
 class PlaySheet
 {
     const MATCH = 1;
+    const ODD = 0;
+
     private $record = array();
 
     /**
@@ -17,6 +19,8 @@ class PlaySheet
     {
         if ($firstCard->matches($secondCard)) {
             $this->record[] = PlaySheet::MATCH;
+        } else {
+            $this->record[] = PlaySheet::ODD;
         }
     }
 
