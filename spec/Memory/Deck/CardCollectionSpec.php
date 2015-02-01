@@ -12,7 +12,23 @@ class CardCollectionSpec extends ObjectBehavior
     {
         $this->add($firstCard);
         $this->add($secondCard);
-        $this->shift()->shouldReturn($firstCard);
-        $this->shift()->shouldReturn($secondCard);
+        $this->getCards()->shouldReturn(array($firstCard, $secondCard));
+    }
+
+    function it_can_shuffle_cards(Card $firstCard, Card $secondCard, Card $thirdCard)
+    {
+        $cards = array($firstCard, $secondCard, $thirdCard);
+        $originalCardOrder = array();
+        $cardCollectionSize = 20;
+
+        while ($cardCollectionSize--) {
+            $card = $cards[array_rand($cards)];
+            $originalCardOrder[] = $card;
+            $this->add($card);
+        }
+
+        $this->shuffle();
+
+        $this->getCards()->shouldNotReturn($originalCardOrder);
     }
 }

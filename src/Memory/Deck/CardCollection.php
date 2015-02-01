@@ -6,13 +6,27 @@ class CardCollection
 {
     private $cards;
 
-    public function add($argument1)
+    /**
+     * @param \Memory\Deck\Card $card
+     */
+    public function add(Card $card)
     {
-        $this->cards[] = $argument1;
+        $this->cards[] = $card;
     }
 
-    public function shift()
+    /**
+     * @return array
+     */
+    public function getCards()
     {
-        return array_shift($this->cards);
+        return $this->cards;
+    }
+
+    /**
+     * Shuffles cards in collection
+     */
+    public function shuffle()
+    {
+        shuffle($this->cards);
     }
 }
