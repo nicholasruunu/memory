@@ -12,6 +12,7 @@
         }
     },
     "require": {
-        "phpspec/phpspec": "2.1.*"
+        "phpspec/phpspec": "2.1.*",
+        "symfony/filesystem": "dev-master"
     }
 }
