@@ -12,11 +12,15 @@ class Deck
     public function turn($position)
     {
         if ($position > count($this->cards) - 1 || $position < 0) {
-            throw new CardOutOfScope;
+            throw new CardOutOfScope(
+                "Card on position $position is out of scope"
+            );
         }
 
         if ( ! isset($this->cards[$position])) {
-            throw new CardAlreadyRemoved;
+            throw new CardAlreadyRemoved(
+              "Card on position $position has already been removed"
+            );
         }
 
         return $this->cards[$position];
