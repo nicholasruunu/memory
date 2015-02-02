@@ -19,7 +19,7 @@ class Deck
             throw new CardAlreadyRemoved;
         }
 
-        return new Card(new \SplFileInfo(__FILE__));
+        return $this->cards[$position];
     }
 
     public function remove($firstPosition, $secondPosition)

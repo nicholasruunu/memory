@@ -23,7 +23,8 @@ class DeckSpec extends ObjectBehavior
 
     function it_can_turn_a_card_by_the_position_in_the_deck()
     {
-        $this->turn($position = 0)->shouldHaveType('\Memory\Deck\Card');
+        $this->turn($position = 0)->shouldReturn($this->cards[0]);
+        $this->turn($position = 2)->shouldReturn($this->cards[2]);
     }
 
     function it_can_not_turn_cards_that_has_been_removed()
