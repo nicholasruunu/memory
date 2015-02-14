@@ -1,5 +1,4 @@
 suites:
-    main:
-        namespace: App
-        psr4_prefix: App
-        src_path: app
+    memory:
+        namespace: Memory
+        psr4_namespace: Memory
