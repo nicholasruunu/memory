@@ -2,18 +2,25 @@
 
 namespace Memory\Deck;
 
-use SplFileInfo;
+use Exception;
 
-class Card
+final class Card
 {
-    private $image;
+    private $imagePath;
 
     /**
-     * @param \SplFileInfo $image
+     * @param $imagePath
+     * @throws Exception
      */
-    public function __construct(SplFileInfo $image)
+    public function __construct($imagePath)
     {
-        $this->image = $image;
+        $imagePath = realpath($imagePath);
+
+        if (!is_file($imagePath)) {
+            throw new Exception("File at {$imagePath} does not exist.");
+        }
+
+        $this->imagePath = $imagePath;
     }
 
     /**
@@ -22,14 +29,19 @@ class Card
      */
     public function matches(Card $card)
     {
-        return $card->getImage() === $this->getImage();
+        return $this->getImage() === $card->image();
+    }
+
+    public function copy()
+    {
+        return new static($this->imagePath);
     }
 
     /**
-     * @return string $image real path of image
+     * @return string $image Real path of image
      */
-    public function getImage()
+    public function image()
     {
-        return $this->image->getRealPath();
+        return $this->imagePath;
     }
 }
