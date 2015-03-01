@@ -3,8 +3,7 @@
 namespace Memory;
 
 use Memory\Events\Aggregate\AggregateRoot;
-use Memory\Deck\Deck;
-use Memory\Events\FirstCardWasTurned;
+use Memory\Events\CardWasTurned;
 use Memory\Events\GameWasStarted;
 use Memory\Events\GameWasWon;
 use Rhumsaa\Uuid\Uuid;
@@ -19,9 +18,9 @@ final class Game
     private $id;
 
     /**
-     * @var Deck $deck
+     * @var PlayingField $playingField
      */
-    private $deck;
+    private $playingField;
 
     /**
      * @var PlaySheet $playSheet
@@ -29,75 +28,73 @@ final class Game
     private $playSheet;
 
     /**
-     * @var array $firstCardTurned
+     * @var array $turnedCards
      */
-    private $firstCardTurned = false;
+    private $turnedCards = array();
 
     public function id()
     {
         return $this->id;
     }
 
-    public static function start(Uuid $id, Deck $deck)
+    public static function start(Uuid $id, PlayingField $playingField)
     {
         $game = new static();
-        $game->applyEvent(new GameWasStarted($id, $deck));
+        $game->applyEvent(new GameWasStarted($id, $playingField));
         return $game;
     }
 
     public function turnCard($cardPosition)
     {
-        $turnedCard = $this->deck->turnCard($cardPosition);
+        $card = $this->playingField->turnCard($cardPosition);
+        $this->applyEvent(new CardWasTurned($cardPosition, $card));
 
-        if ($this->deck->countCards() === 0) {
-            throw new RuntimeException(
-                'There is no more cards to draw from, you have won.'
-            );
+        if (count($this->turnedCards) === 1) {
+            return;
         }
 
-        if (empty($this->firstCardTurned)) {
-            $this->firstCardTurned = $turnedCard;
-            return $this->applyEvent(new FirstCardWasTurned($turnedCard));
+        list($firstCard, $secondCard) = $this->turnedCards;
+
+        if (!$firstCard->matches($secondCard)) {
+            return $this->applyEvent(new RoundWasLost);
         }
 
-        if (!$this->firstCardTurned->matches($turnedCard)) {
-            return $this->applyEvent(new RoundWasLost($turnedCard));
+        if ($this->playingField->countCards() !== 2) {
+            return $this->applyEvent(new RoundWasWon);
         }
 
-        if ($this->deck->countCards() !== 2) {
-            return $this->applyEvent(new RoundWasWon($this->firstCardTurned, $turnedCard));
-        }
-
-        return $this->applyEvent(new GameWasWon($this->firstCardTurned, $turnedCard, $this->playSheet));
+        return $this->applyEvent(new GameWasWon($this->playSheet));
     }
 
     private function applyGameWasStarted(GameWasStarted $event)
     {
         $this->id = $event->id();
-        $this->deck = $event->deck();
+        $this->playingField = $event->playingField();
         $this->playSheet = new PlaySheet;
     }
 
-    private function applyFirstCardWasTurned(FirstCardWasTurned $event)
+    private function applyCardWasTurned(CardWasTurned $event)
     {
-        $this->firstCardTurned = $event->card();
+        $this->turnedCards[] = $event->card();
     }
 
     private function applyRoundWasLost(RoundWasLost $event)
     {
         $this->playSheet = $this->playSheet->record(PlaySheet::ODD);
-        $this->firstCardTurned = false;
+        $this->turnedCards = array();
     }
 
     private function applyRoundWasWon(RoundWasWon $event)
     {
-        $this->deck->remove($event->firstCard(), $event->secondCard());
+        while ($card = array_shift($this->turnedCards)) {
+            $this->playingField->remove($card);
+        }
+
         $this->playSheet = $this->playSheet->record(PlaySheet::MATCH);
-        $this->firstCardTurned = false;
     }
 
     private function applyGameWasWon(GameWasWon $event)
     {
-        $this->applyRoundWasWon(new RoundWasWon($event->firstCard(), $event->secondCard()));
+        $this->applyRoundWasWon(new RoundWasWon);
     }
 }
