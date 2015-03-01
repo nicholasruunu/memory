@@ -2,7 +2,7 @@
 
 namespace Memory\Events;
 
-use Memory\Deck\Deck;
+use Memory\PlayingField;
 use Rhumsaa\Uuid\Uuid;
 
 final class GameWasStarted
@@ -13,14 +13,14 @@ final class GameWasStarted
     private $id;
 
     /**
-     * @var deck
+     * @var PlayingField
      */
-    private $deck;
+    private $playingField;
 
-    public function __construct(Uuid $id, Deck $deck)
+    public function __construct(Uuid $id, PlayingField $playingField)
     {
         $this->id = $id;
-        $this->deck = $deck;
+        $this->playingField = $playingField;
     }
 
     public function id()
@@ -28,8 +28,8 @@ final class GameWasStarted
         return $this->id;
     }
 
-    public function deck()
+    public function playingField()
     {
-
+        return $this->playingField;
     }
 }

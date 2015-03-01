@@ -10,12 +10,13 @@ CardRepository
     add
     remove
 
-Memory(ScoreCalculator, PlaySheet, Deck)
-    play(position, position)
-    score()
+Game(Deck, ScoreCalculator)
+    id(): Uuid
+    play(cardPosition): Card
 
-Game(PlaySheet, Deck)
-    createFrom(PlaySheet, Deck)
+Games
+    add(Game)
+    find(Uuid id)
 
 Card(SplFileInfo image)
     matches(Card): bool

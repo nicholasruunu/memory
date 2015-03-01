@@ -2,7 +2,7 @@
 
 namespace spec\Memory;
 
-use Memory\Deck\Card;
+use Memory\PlayingField\Card;
 use Memory\PlaySheet;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;

@@ -2,9 +2,9 @@
 
 namespace Memory\Events;
 
-use Memory\Deck\Card;
+use Memory\PlayingField\Card;
 
-class FirstCardWasTurned
+class CardWasTurned
 {
     /**
      * @var card

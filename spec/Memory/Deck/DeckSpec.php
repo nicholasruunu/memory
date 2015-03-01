@@ -2,10 +2,10 @@
 
 namespace spec\Memory\Deck;
 
-use Memory\Deck\Card;
-use Memory\Deck\CardCollection;
-use Memory\Deck\Exceptions\CardAlreadyRemoved;
-use Memory\Deck\Exceptions\CardOutOfScope;
+use Memory\PlayingField\Card;
+use Memory\PlayingField\CardCollection;
+use Memory\PlayingField\Exceptions\CardAlreadyRemoved;
+use Memory\PlayingField\Exceptions\CardOutOfScope;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 

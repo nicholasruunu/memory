@@ -1,6 +1,6 @@
 <?php
 
-namespace Memory\Deck;
+namespace Memory\PlayingField;
 
 use Exception;
 
@@ -24,7 +24,7 @@ final class Card
     }
 
     /**
-     * @param \Memory\Deck\Card $card
+     * @param \Memory\PlayingField\Card $card
      * @return bool
      */
     public function matches(Card $card)

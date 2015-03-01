@@ -1,6 +1,6 @@
 <?php
 
-namespace Memory\Deck\Exceptions;
+namespace Memory\PlayingField\Exceptions;
 
 use Exception;
 

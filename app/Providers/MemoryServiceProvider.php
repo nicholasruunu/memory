@@ -9,7 +9,7 @@ use League\Tactician\Handler\MethodNameInflector\HandleClassNameInflector;
 use League\Tactician\Setup\QuickStart;
 use Memory\Commands\StartGame;
 use Memory\Commands\StartGameHandler;
-use Memory\Deck\DeckGenerator;
+use Memory\PlayingField\DeckGenerator;
 use Memory\Events\EventDispatcher;
 use Memory\Events\GameWasStarted;
 
@@ -24,11 +24,11 @@ class MemoryServiceProvider extends ServiceProvider
     {
         $eventDispatcher->addListener(
             GameWasStarted::class,
-            [$this->app->make('App\Http\Controllers\MemoryController'), 'gameWasStarted']
+            [$this->app->make(MemoryController::class), 'gameWasStarted']
         );
 
         QuickStart::create([
-            StartGame::class => $this->app->make('Memory\Commands\StartGameHandler'),
+            StartGame::class => $this->app->make(StartGameHandler::class),
         ]);
     }
 
@@ -50,14 +50,14 @@ class MemoryServiceProvider extends ServiceProvider
 
         $this->app->bind(StartGameHandler::class, function($app) {
             return new StartGameHandler(
-                $app['Memory\Events\EventDispatcher'],
-                $app['Memory\Deck\DeckGenerator']
+                $app[EventDispatcher::class],
+                $app[DeckGenerator::class]
             );
         });
 
         $this->app->bind(CommandBus::class, function($app) {
             $locator = new InMemoryLocator;
-            $locator->addHandler($app['Memory\Commands\StartGameHandler'], StartGame::class);
+            $locator->addHandler($app[StartGameHandler::class], StartGame::class);
 
             $handlerMiddleware = new CommandHandlerMiddleware(
                 $locator,

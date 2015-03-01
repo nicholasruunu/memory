@@ -1,13 +1,13 @@
 <?php
 
-namespace Memory\Deck;
+namespace Memory\PlayingField;
 
 class CardCollection
 {
     private $cards;
 
     /**
-     * @param \Memory\Deck\Card $card
+     * @param \Memory\PlayingField\Card $card
      */
     public function add(Card $card)
     {

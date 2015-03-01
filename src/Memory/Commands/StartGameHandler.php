@@ -2,7 +2,7 @@
 
 namespace Memory\Commands;
 
-use Memory\Deck\DeckGenerator;
+use Memory\PlayingField\DeckGenerator;
 use Memory\Events\EventDispatcher;
 use Memory\Game;
 
